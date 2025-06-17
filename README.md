@@ -1,6 +1,6 @@
 # 🚀 OptimCV
 
-OptimCV is a cutting-edge web application meticulously crafted to empower job seekers in their quest for the perfect job. By harnessing the power of advanced Artificial Intelligence (AI) , OptimCV intelligently analyzes your resume (CV) against specific job descriptions, providing a comprehensive compatibility score, generating highly personalized suggestions for improvement, and even delivering an optimized version of your resume tailored to maximize your chances of success. Say goodbye to generic applications and hello to a resume that truly stands out! ✨
+OptimCV is a cutting-edge web application meticulously crafted to empower job seekers in their quest for the perfect job. By harnessing the power of advanced Artificial Intelligence (AI) , OptimCV intelligently analyzes your resume (CV) against specific job descriptions, providing a comprehensive compatibility score, generating highly personalized suggestions for improvement, and even delivering an optimized version of your resume tailored to maximize your chances of success. Say goodbye to generic applications and hello to a resume that truly stands out! 
 ![Home_Page](https://github.com/user-attachments/assets/d312b30e-da11-4eab-a9fb-2e1dd9989a86)
 
 
@@ -55,7 +55,7 @@ Before you begin, make sure you have the following software installed on your sy
 1.  **Clone the repository**: First, clone the OptimCV repository from GitHub to your local machine using Git:
 
     ```bash
-    git clone https://github.com/your-username/OptimCV.git
+    git clone https://github.com/ademdev12/OptimCV.git
     cd OptimCV
     ```
 
