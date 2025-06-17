@@ -1,0 +1,125 @@
+<!-- templates/pages/dashboard.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - OptimCV{% endblock %}
+
+{% block content_title %}Your Dashboard{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="page-header animate-fade-in">
+        <h1 class="page-title">Hello, {{ request.user.first_name }}!</h1>
+        <p class="page-subtitle">Let’s craft your perfect CV.</p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="dashboard-grid">
+        <div class="dashboard-card animate-slide-up">
+            <i class="fas fa-file-alt card-icon primary"></i>
+            <div class="card-value">{{ optimization_count }}</div>
+            <div class="card-label">Total Optimizations</div>
+            {% if plan == 'Free' %}
+                <div class="card-info animate-pulse">
+                    {{ optimizations_remaining }} remaining
+                </div>
+            {% endif %}
+        </div>
+        <div class="dashboard-card animate-slide-up">
+            <i class="fas fa-star card-icon success"></i>
+            <div class="card-value">{{ average_score|floatformat:1|default:"N/A" }}%</div>
+            <div class="card-label">Average Score</div>
+        </div>
+        <div class="dashboard-card animate-slide-up">
+            <i class="fas fa-tachometer-alt card-icon warning"></i>
+            <div class="card-value">
+                {% if plan == 'Premium' %}
+                    {{ subscription_days_remaining }}
+                {% else %}
+                    {{ optimizations_remaining }}
+                {% endif %}
+            </div>
+            <div class="card-label">Plan Usage</div>
+            <div class="usage-glow {% if plan == 'Premium' %}premium{% else %}free{% endif %}">
+                <span class="glow-text">
+                    {% if plan == 'Premium' %}
+                        Days Left
+                    {% else %}
+                        Optimizations Left
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="dashboard-card animate-slide-up">
+            <i class="fas fa-bolt card-icon accent"></i>
+            <div class="card-value">
+                {% if latest_optimization %}
+                    {{ latest_optimization.match_score }}%
+                {% else %}
+                    N/A
+                {% endif %}
+            </div>
+            <div class="card-label">Latest Score</div>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Recent Activity -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-6">
+            <div class="dashboard-card animate-slide-up">
+                <h3 class="card-title">Quick Actions</h3>
+                <div class="quick-actions">
+                    <a href="{% url 'upload_cv' %}" class="quick-action {% if plan == 'Free' and optimization_count >= FREE_OPTIMIZATION_LIMIT %}locked{% endif %}">
+                        <i class="fas fa-magic quick-icon"></i>
+                        Optimize CV
+                        <span class="action-status">
+                            {% if plan == 'Free' and optimization_count >= FREE_OPTIMIZATION_LIMIT %}
+                                Locked
+                            {% else %}
+                                Go
+                            {% endif %}
+                        </span>
+                    </a>
+                    <a href="{% url 'optimization_history' %}" class="quick-action">
+                        <i class="fas fa-history quick-icon"></i>
+                        View History
+                        <span class="action-status">Explore</span>
+                    </a>
+                    {% if plan == 'Free' %}
+                        <a href="{% url 'upgrade_plan' %}" class="quick-action premium-action">
+                            <i class="fas fa-star quick-icon warning animate-pulse"></i>
+                            Upgrade Plan
+                            <span class="action-status">Unlock</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-card animate-slide-up">
+                <h3 class="card-title">Recent Activity</h3>
+                {% if recent_optimizations %}
+                    <div class="activity-list">
+                        {% for optimization in recent_optimizations %}
+                            <div class="activity-item animate-fade-in">
+                                <div class="activity-content">
+                                    <span class="activity-date">{{ optimization.created_at|date:"d M Y" }}</span>
+                                    <span class="activity-score {% if optimization.match_score >= 80 %}score-high{% elif optimization.match_score >= 50 %}score-medium{% else %}score-low{% endif %}">
+                                        {{ optimization.match_score }}%
+                                    </span>
+                                    <span class="activity-title">{{ optimization.job_title|default:"CV Optimization" }}</span>
+                                    <a href="{% url 'optimization_result' optimization.id %}" class="activity-link">View</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-data animate-fade-in">
+                        <i class="fas fa-info-circle"></i>
+                        <p>No recent optimizations. <a href="{% url 'upload_cv' %}" class="start-link">Start now!</a></p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

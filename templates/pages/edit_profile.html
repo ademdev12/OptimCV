@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Profile - OptimCV{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="page-header profile-header">
+        <h1 class="page-title">Edit Your Profile</h1>
+        <p class="page-subtitle">Update your account details securely.</p>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3 animate-fade-in" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Edit Form -->
+    <div class="profile-container">
+        <div class="profile-card">
+            <form method="post" class="profile-form" id="edit-profile-form" aria-label="Edit Profile Form">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="id_full_name">Full Name</label>
+                        {{ form.full_name }}
+                        {% if form.full_name.errors %}
+                            <span class="form-error">{{ form.full_name.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" value="{{ email }}" readonly aria-describedby="email-readonly">
+                        <small id="email-readonly" class="form-info">Email cannot be changed.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password1">New Password (optional)</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <span class="form-error">{{ form.password1.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password2">Confirm New Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <span class="form-error">{{ form.password2.errors|join:", " }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="save-changes-btn">
+                        <i class="fas fa-save btn-icon"></i>
+                        <span class="btn-text">Save Changes</span>
+                        <span class="btn-spinner fas fa-spinner"></span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'profile_view' %}'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Optimize CV - OptimCV{% endblock %}
+
+{% block content_title %}Optimize CV{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="page-header animate-fade-in">
+        <h1 class="page-title">Optimize Your CV</h1>
+        <p class="page-subtitle">Upload your CV and provide job details to get started</p>
+    </div>
+
+    <!-- Optimize Form -->
+    <div class="optimize-container animate-slide-up">
+        {% if plan == 'Free' and optimization_count >= FREE_OPTIMIZATION_LIMIT %}
+            <div class="limit-overlay">
+                <p class="limit-message animate-pulse">Limit Reached ({{ FREE_OPTIMIZATION_LIMIT }})!</p>
+                <a href="{% url 'upgrade_plan' %}" class="btn btn-premium animate-bounce">Go Premium</a>
+            </div>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data" class="optimize-form {% if plan == 'Free' and optimization_count >= FREE_OPTIMIZATION_LIMIT %}form-disabled{% endif %}" id="optimizeForm">
+            {% csrf_token %}
+            <div class="form-card">
+                <div class="form-group">
+                    <label for="job_title">Job Title</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-briefcase input-icon"></i>
+                        <input type="text" name="job_title" id="job_title" class="form-control" placeholder="Enter the job title" required aria-label="Job title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-building input-icon"></i>
+                        <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Enter the company name" required aria-label="Company name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="resume_file">Upload CV</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-file-upload input-icon"></i>
+                        <input type="file" name="resume_file" id="resume_file" class="form-control" accept=".pdf" required aria-label="Upload CV (PDF only)">
+                        <span class="input-hint">PDF only</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="job_offer_text">Job Description</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-briefcase input-icon"></i>
+                        <textarea name="job_offer_text" id="job_offer_text" class="form-control" rows="5" placeholder="Paste the job description here" required aria-label="Job description"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-optimize" id="optimizeBtn" {% if plan == 'Free' and optimization_count >= FREE_OPTIMIZATION_LIMIT %}disabled{% endif %}>
+                        <span class="btn-text">Optimize Now</span>
+                        <span class="btn-spinner"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </div>
+                <div class="progress-container" id="progressContainer">
+                    <p class="progress-text"><i class="fas fa-cog fa-spin progress-icon"></i> <span id="progressStatus">Ready to optimize</span></p>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

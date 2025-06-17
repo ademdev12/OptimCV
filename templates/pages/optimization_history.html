@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Optimization History - OptimCV{% endblock %}
+
+{% block content_title %}Optimization History{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="page-header animate-fade-in">
+        <h1 class="page-title">Optimization History</h1>
+        <p class="page-subtitle">Track your CV optimizations by job and company</p>
+    </div>
+
+    <!-- History Content -->
+    <div class="dashboard-card history-container animate-slide-up">
+        <!-- Plan Info -->
+        <div class="history-info">
+            <div class="plan-info">
+                <p><strong>Current Plan:</strong> 
+                    <span class="plan-badge">{{ plan }}</span>
+                </p>
+                {% if plan == 'Free' %}
+                    <a href="{% url 'upgrade_plan' %}" class="upgrade-link">
+                        <i class="fas fa-crown"></i> Go Premium for DOCX & More!
+                    </a>
+                {% endif %}
+            </div>
+            {% if plan == 'Free' %}
+                <p class="remaining-info">
+                    <i class="fas fa-info-circle"></i> {{ optimizations_remaining }} optimizations remaining
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by job title or company..." aria-label="Search optimizations">
+            </div>
+        </div>
+
+        <!-- History Cards -->
+        {% if optimizations %}
+            <div class="history-grid" id="historyGrid">
+                {% for opt in optimizations %}
+                    <div class="history-card animate-fade-in" data-job-title="{{ opt.job_title|lower|default:'job title not specified' }}" data-company-name="{{ opt.company_name|lower|default:'company not specified' }}">
+                        <div class="card-header">
+                            <div class="job-info">
+                                <h3 class="job-title">{{ opt.job_title|default:"Job Title Not Specified" }}</h3>
+                                <p class="company-name">
+                                    <i class="fas fa-building mr-1"></i>
+                                    {{ opt.company_name|default:"Company Not Specified" }}
+                                </p>
+                            </div>
+                            <div class="header-right">
+                                <span class="score-badge {% if opt.match_score >= 80 %}score-high{% elif opt.match_score >= 50 %}score-medium{% else %}score-low{% endif %}">
+                                    {{ opt.match_score }}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Date:</span>
+                                <span class="detail-value">{{ opt.created_at|date:"d M Y H:i" }}</span>
+                            </div>
+                        </div>
+                        <div class="card-downloads">
+                            <h4>Downloads</h4>
+                            <div class="download-group">
+                                <a href="{{ opt.optimized_resume_1.url }}" class="btn btn-primary btn-sm" download title="Download PDF 1">
+                                    <i class="fas fa-file-pdf"></i> PDF 1
+                                </a>
+                                {% if opt.plan_used == 'Premium' and opt.optimized_resume_1_docx %}
+                                    <a href="{{ opt.optimized_resume_1_docx.url }}" class="btn btn-success btn-sm" download title="Download DOCX 1">
+                                        <i class="fas fa-file-word"></i> DOCX 1
+                                    </a>
+                                {% else %}
+                                    <span class="premium-lock" title="Upgrade to Premium for DOCX">
+                                        <i class="fas fa-lock"></i> DOCX
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                        <a href="{% url 'optimization_result' opt.id %}" class="btn btn-outline-primary btn-sm view-details">
+                            View Details
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="no-data animate-fade-in">
+                <i class="fas fa-folder-open fa-2x"></i>
+                <p>No optimizations yet. <a href="{% url 'upload_cv' %}" class="start-link">Start optimizing your CV now!</a></p>
+            </div>
+        {% endif %}
+
+        <!-- Actions -->
+        <div class="history-actions">
+            <a href="{% url 'upload_cv' %}" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Optimize Again
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript for Search Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const historyGrid = document.getElementById('historyGrid');
+            const cards = historyGrid ? historyGrid.getElementsByClassName('history-card') : [];
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                for (let card of cards) {
+                    const jobTitle = card.getAttribute('data-job-title');
+                    const companyName = card.getAttribute('data-company-name');
+
+                    if (jobTitle.includes(searchTerm) || companyName.includes(searchTerm)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

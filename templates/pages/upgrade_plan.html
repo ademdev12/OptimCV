@@ -1,0 +1,91 @@
+<!-- templates/pages/upgrade_plan.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upgrade to Premium - OptimCV{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1 class="page-title">Upgrade to Premium</h1>
+
+    </div>
+
+    <div class="dashboard-card upgrade-container">
+        <div class="upgrade-body">
+            <!-- Plan Card -->
+            <div class="plan-card">
+                <div class="plan-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="plan-details">
+                    <div class="plan-name">Premium Plan</div>
+                    <p class="plan-description">Get full access to all features designed to optimize your resume and boost your job search.</p>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-section">
+                <h3 class="section-title">Premium Features</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h4 class="feature-title">Unlimited Optimizations</h4>
+                        <p class="feature-description">Optimize as many resumes as you need for different job applications without restrictions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="feature-title">Advanced Analytics</h4>
+                        <p class="feature-description">Get detailed insights and track how your resume score improves over time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h4 class="feature-title">Keyword Optimization</h4>
+                        <p class="feature-description">Identify and integrate the most important keywords for your target job.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-export"></i>
+                        </div>
+                        <h4 class="feature-title">Multiple Export Formats</h4>
+                        <p class="feature-description">Download your resume in PDF, DOCX, or TXT formats with one click.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h4 class="feature-title">Version History</h4>
+                        <p class="feature-description">Track all your optimizations and revert to previous versions if needed.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4 class="feature-title">Priority Support</h4>
+                        <p class="feature-description">Get faster responses from our dedicated support team.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Section -->
+            <div class="price-section">
+                <div class="price-amount">$9.99</div>
+                <div class="price-period">per month</div>
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-upgrade">Upgrade Now</button>
+                </form>
+            </div>
+
+            <!-- Guarantee Badge -->
+            <div class="guarantee-badge">
+                <i class="fas fa-shield-alt"></i> Secure payment and satisfaction guaranteed
+            </div>
+        </div>
+    </div>
+{% endblock %}

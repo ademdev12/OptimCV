@@ -1,0 +1,32 @@
+<!-- templates/pages/profile.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Profile - OptimCV{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="page-header profile-header">
+        <h1 class="page-title">Your Profile</h1>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-info">
+                <h3 class="info-title">Account Overview</h3>
+                <p><strong>Name:</strong> {{ full_name|default:"Not set" }}</p>
+                <p><strong>Email:</strong> {{ email }}</p>
+                <p><strong>Plan:</strong> 
+                    <span class="plan-badge {{ plan|lower }}">{{ plan }}</span>
+                </p>
+            </div>
+            <div class="profile-actions">
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+                {% if plan == 'Free' %}
+                    <a href="{% url 'upgrade_plan' %}" class="btn btn-premium">Go Premium Now</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

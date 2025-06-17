@@ -1,0 +1,15 @@
+Django
+python-decouple
+stripe
+psycopg2-binary
+social-auth-app-django
+social-auth-core
+google-generativeai
+google-api-python-client
+google-auth
+google-auth-httplib2
+requests
+requests-oauthlib
+oauth2
+python3-openid
+python-openid
