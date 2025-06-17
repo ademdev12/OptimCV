@@ -93,12 +93,16 @@ Before you begin, make sure you have the following software installed on your sy
     STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
     STRIPE_PUBLIC_KEY=pk_test_your_stripe_public_key
     GOOGLE_API_KEY=your_google_generative_ai_api_key
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=your_google_oauth2_client_id
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=your_google_oauth2_client_secret
     ```
 
     *   `SECRET_KEY`: A unique, long, and random string used by Django for cryptographic signing. You can generate one using online tools or Python code.
     *   `DEBUG`: Set to `True` for development purposes (enables detailed error pages). **MUST be `False` in production!**
     *   `STRIPE_SECRET_KEY` and `STRIPE_PUBLIC_KEY`: Your secret and public API keys from your Stripe dashboard. These are essential for processing payments.
     *   `GOOGLE_API_KEY`: Your API key for accessing Google Generative AI services. Obtain this from the Google AI Studio or Google Cloud Console.
+    *   `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY`: Your Google OAuth2 Client ID, obtained from the Google Cloud Console, used for Google authentication.
+    *   `SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET`: Your Google OAuth2 Client Secret, obtained from the Google Cloud Console, used in conjunction with the Client ID for Google authentication.
 
 ### Database Setup
 
