@@ -29,7 +29,7 @@ OptimCV is built upon a robust and modern technology stack, ensuring high perfor
 *   **🌐 Django**: A powerful, high-level Python web framework that facilitates rapid development of secure and maintainable websites. It handles everything from URL routing to database interactions.
 *   **💳 Stripe**: Utilized for secure and efficient payment processing, enabling seamless upgrades to Premium plans.
 *   **🧠 Google Generative AI**: The brain behind OptimCV's intelligent analysis and optimization capabilities. This advanced AI model powers the match score calculation, suggestion generation, and resume rewriting.
-*   ** Markup & Styling**: The foundation of our user-friendly interface, ensuring a responsive and engaging experience across all devices.
+*   **🎨 Markup & Styling**: The foundation of our user-friendly interface, ensuring a responsive and engaging experience across all devices.
     *   **HTML5**: For structuring the content of the web pages.
     *   **CSS3**: For styling and layout, including responsive design for various screen sizes.
     *   **JavaScript**: For interactive elements and dynamic content on the frontend.
